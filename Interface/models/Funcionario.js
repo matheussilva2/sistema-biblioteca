@@ -54,7 +54,7 @@ module.exports = {
             }
         });
 
-        sql += ` where id='${cpf}'`;
+        sql += ` where cpf_membro='${cpf}'`;
 
         database.connection.query(sql, function(err, result){
             if(err) throw err;
@@ -63,7 +63,7 @@ module.exports = {
         });
     },
     delete: function(cpf) {
-        let sql = `delete from Funcionario where id='${cpf}'`;
+        let sql = `delete from Funcionario where cpf_membro='${cpf}'`;
 
         database.connection.query(sql, function(err, result){
             if(err) throw err;

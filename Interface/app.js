@@ -28,11 +28,12 @@ function membros() {
         switch (option) {
             case 1:
                 console.log(await Membro.selectAll());
+                mainMenu();
                 break;
             case 2:
-                rl.question("CPF do membro: ", async(cpf) => {
-                    console.log(await Membro.selectOne(Number.parseInt(cpf)));
-                });
+                cpf = await prompt("CPF: ");
+                console.log(await Membro.selectOne(Number.parseInt(cpf)));
+                mainMenu();
                 break;
             case 3:
                 cpf = await prompt("CPF: ");
@@ -56,6 +57,7 @@ function membros() {
                     estado,
                     complemento
                 ]);
+                mainMenu();
                 break;
             case 4:
                 cpf = await prompt("CPF: ");
@@ -78,16 +80,18 @@ function membros() {
                     estado,
                     complemento
                 });
+                mainMenu();
                 break;
             case 5:
                 cpf = await prompt("CPF: ");
                 Membro.delete(cpf);
+                mainMenu();
                 break;
             default:
+                mainMenu();
                 break;
         }
     });
-    mainMenu();
 }
 
 function funcionarios() {
@@ -105,38 +109,42 @@ function funcionarios() {
         switch (option) {
             case 1:
                 console.log(await Funcionario.selectAll());
+                mainMenu();
                 break;
             case 2:
-                rl.question("CPF do funcionário: ", async(cpf) => {
-                    console.log(await Funcionario.selectOne(Number.parseInt(cpf)));
-                });
+                cpf = await prompt("CPF: ");
+                console.log(await Funcionario.selectOne(Number.parseInt(cpf)));
+                mainMenu();
                 break;
             case 3:
                 cpf = await prompt("CPF do membro: ");
                 ctps = await prompt("Número CTPS: ");
 
-                Membro.create([
+                Funcionario.create([
                     cpf,
                     ctps
                 ]);
+                mainMenu();
                 break;
             case 4:
                 cpf = await prompt("CPF: ");
-                ctps = await prompt("Número CTPS: ");
+                numero_ctps = await prompt("Número CTPS: ");
 
-                Membro.update(cpf, {
-                    ctps
+                Funcionario.update(cpf, {
+                    numero_ctps
                 });
+                mainMenu();
                 break;
             case 5:
                 cpf = await prompt("CPF: ");
-                Membro.delete(cpf);
+                Funcionario.delete(cpf);
+                mainMenu();
                 break;
             default:
+                mainMenu();
                 break;
         }
     });
-    mainMenu();
 }
 
 function emprestimos() {
@@ -154,45 +162,49 @@ function emprestimos() {
         switch (option) {
             case 1:
                 console.log(await Emprestimo.selectAll());
+                mainMenu();
                 break;
             case 2:
-                rl.question("ID do empréstimo: ", async(id) => {
-                    console.log(await Emprestimo.selectOne(Number.parseInt(id)));
-                });
+                id = await prompt("ID do empréstimo: ");
+                console.log(await Emprestimo.selectOne(Number.parseInt(id)));
+                mainMenu();
                 break;
             case 3:
-                cpf = await prompt("CPF do membro: ");
-                isbn = await prompt("ISBN do livro: ");
+                cpf_membro = await prompt("CPF do membro: ");
+                isbn_livro = await prompt("ISBN do livro: ");
 
                 Emprestimo.create([
-                    isbn,
-                    cpf
+                    isbn_livro,
+                    cpf_membro
                 ]);
+                mainMenu();
                 break;
             case 4:
                 id = await prompt("ID do empréstimo: ");
-                cpf = await prompt("CPF do membro: ");
-                isbn = await prompt("ISBN do livro: ");
+                cpf_membro = await prompt("CPF do membro: ");
+                isbn_livro = await prompt("ISBN do livro: ");
 
                 Emprestimo.update(id, {
-                    isbn,
-                    cpf
+                    isbn_livro,
+                    cpf_membro
                 });
+                mainMenu();
                 break;
             case 5:
                 id = await prompt("ID do emprésitmo: ");
                 Emprestimo.delete(id);
+                mainMenu();
                 break;
             default:
+                mainMenu();
                 break;
         }
     });
-    mainMenu();
 }
 
 function livros() {
     console.log(`
----- Empréstimos ----
+---- Livros ----
 1 - Todos os Livros
 2 - Livros por ISBN
 3 - Novo Livro
@@ -206,11 +218,12 @@ function livros() {
         switch (option) {
             case 1:
                 console.log(await Livro.selectAll());
+                mainMenu();
                 break;
             case 2:
-                rl.question("ISBN: ", async(isbn) => {
-                    console.log(await Livro.selectOne(Number.parseInt(isbn)));
-                });
+                isbn = await prompt("ISBN: ");
+                console.log(await Livro.selectOne(Number.parseInt(isbn)));
+                mainMenu();
                 break;
             case 3:
                 isbn = await prompt("ISBN do livro: ");
@@ -222,6 +235,7 @@ function livros() {
                 Livro.create([
                     isbn, titulo, lancamento, pais_publicacao, estoque
                 ]);
+                mainMenu();
                 break;
             case 4:
                 isbn = await prompt("ISBN do livro: ");
@@ -233,25 +247,29 @@ function livros() {
                 Livro.update(isbn, {
                     titulo, lancamento, pais_publicacao, estoque
                 });
+                mainMenu();
                 break;
             case 5:
                 isbn = await prompt("ISBN: ");
                 Livro.delete(isbn);
+                mainMenu();
                 break;
             case 6:
                 isbn = await prompt("ISBN: ");
                 categorias = await Livro.getCategorias(isbn);
                 console.log(categorias);
+                mainMenu();
+                break;
             default:
+                mainMenu();
                 break;
         }
     });
-    mainMenu();
 }
 
 function categorias() {
     console.log(`
----- Empréstimos ----
+---- Categorias ----
 1 - Todas as Categorias
 2 - Categoria por ID
 3 - Nova Categoria
@@ -264,38 +282,42 @@ function categorias() {
         switch (option) {
             case 1:
                 console.log(await Categoria.selectAll());
+                mainMenu();
                 break;
             case 2:
-                rl.question("ID da categoria: ", async(id) => {
-                    console.log(await Categoria.selectOne(Number.parseInt(id)));
-                });
+                id = await prompt("ID da categoria: ");
+                console.log(await Categoria.selectOne(Number.parseInt(id)));
+                mainMenu();
                 break;
             case 3:
-                let name = await prompt("Nome da categoria: ");
-                Categoria.create(name);
+                nome = await prompt("Nome da categoria: ");
+                Categoria.create(nome);
+                mainMenu();
                 break;
             case 4:
                 id = await prompt("ID da categoria: ");
-                name = await prompt("Novo nome da categoria: ");
+                nome = await prompt("Novo nome da categoria: ");
 
                 Categoria.update(id, {
-                    name
+                    nome
                 });
+                mainMenu();
                 break;
             case 5:
                 id = await prompt("ID da categoria: ");
                 Categoria.delete(id);
+                mainMenu();
                 break;
             default:
+                mainMenu();
                 break;
         }
     });
-    mainMenu();
 }
 
 function autores() {
     console.log(`
----- Empréstimos ----
+---- Autores ----
 1 - Todos os Autores
 2 - Autor por ID
 3 - Novo Autor
@@ -308,17 +330,19 @@ function autores() {
         switch (option) {
             case 1:
                 console.log(await Autor.selectAll());
+                mainMenu();
                 break;
             case 2:
-                rl.question("ID da autora: ", async(id) => {
-                    console.log(await Autor.selectOne(Number.parseInt(id)));
-                });
+                id = await prompt("ID da autora: ");
+                console.log(await Autor.selectOne(Number.parseInt(id)));
+                mainMenu();
                 break;
             case 3:
-                let nome = await prompt("Nome da autora: ");
-                let pais_nascimento = await prompt("País de nascimento: ");
-                let data_nascimento = await prompt("Data de nascimento da autora: ");
+                nome = await prompt("Nome da autora: ");
+                pais_nascimento = await prompt("País de nascimento: ");
+                data_nascimento = await prompt("Data de nascimento da autora: ");
                 Autor.create([nome, pais_nascimento, data_nascimento]);
+                mainMenu();
                 break;
             case 4:
                 id = await prompt("ID da autora: ");
@@ -326,16 +350,18 @@ function autores() {
                 pais_nascimento = await prompt("País de nascimento: ");
                 data_nascimento = await prompt("Data de nascimento da autora: ");
                 Autor.update(id, {nome, pais_nascimento, data_nascimento});
+                mainMenu();
                 break;
             case 5:
                 id = await prompt("ID da autora: ");
                 Autor.delete(id);
+                mainMenu();
                 break;
             default:
+                mainMenu();
                 break;
         }
     });
-    mainMenu();
 }
 
 function mainMenu() {

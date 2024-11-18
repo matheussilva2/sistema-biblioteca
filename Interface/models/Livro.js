@@ -72,7 +72,8 @@ module.exports = {
         });
     },
     getCategorias: async function(isbn_livro) {
-        let sql = `select * from livro_categoria where isbn_livro=${isbn_livro}`;
+        let sql = `select * from livro_categoria where isbn_livro='${isbn_livro}';`;
+        
         const categories = await new Promise((resolve, reject) => {
             database.connection.query(sql, function(err, result){
                 if(err){
@@ -91,9 +92,11 @@ module.exports = {
                 categories_id_list += ",";
         });
         categories_id_list += ")";
+        if(categories_id_list === "()"){
+            return [];
+        }
 
         sql = `select * from categoria where id in ${categories_id_list}`;
-        
         return new Promise((resolve, reject) => {
             database.connection.query(sql, function(err, result) {
                 if(err) {
